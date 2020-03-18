@@ -1,0 +1,3 @@
+
+# with multitenant network plugin
+# oc adm pod-network join-projects --to=<project1> <project2>
