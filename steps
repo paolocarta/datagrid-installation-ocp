@@ -25,3 +25,9 @@ curl -v -X PUT \
 oc create route passthrough cache-service-hotrod-route \
   --port=hotrod \
   --service cache-service
+
+
+# 
+
+oc new-app https://github.com/paolocarta/datagrid-installation-ocp \
+-
