@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>org.jboss.quickstarts.jdg</groupId>
+  <artifactId>openshift-cache-service-create-cache</artifactId>
+  <name>Creating Caches with Cache Service: Red Hat Data Grid for OpenShift</name>
+  <version>1.0-SNAPSHOT</version>
+  <build>
+    <plugins>
+      <plugin>
+        <artifactId>maven-shade-plugin</artifactId>
+        <version>${shade-maven-plugin.version}</version>
+        <executions>
+          <execution>
+            <phase>package</phase>
+            <goals>
+              <goal>shade</goal>
+            </goals>
+            <configuration>
+              <transformers>
+                <transformer>
+                  <mainClass>${shade-maven-plugin.main.class}</mainClass>
+                </transformer>
+              </transformers>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
+  <dependencyManagement>
+    <dependencies>
+      <dependency>
+        <groupId>org.infinispan</groupId>
+        <artifactId>infinispan-bom</artifactId>
+        <version>${version.org.infinispan}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+      <dependency>
+        <groupId>com.github.ben-manes.caffeine</groupId>
+        <artifactId>caffeine</artifactId>
+        <version>2.4.0</version>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
+  <properties>
+    <maven.compiler.target>1.8</maven.compiler.target>
+    <shade-maven-plugin.version>3.1.0</shade-maven-plugin.version>
+    <shade-maven-plugin.main.class>org.infinispan.quickstart.openshift.cache.createcache.CreateCache</shade-maven-plugin.main.class>
+    <maven.compiler.source>1.8</maven.compiler.source>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <version.org.infinispan>8.5.3.Final-redhat-00002</version.org.infinispan>
+  </properties>
+</project>
+
