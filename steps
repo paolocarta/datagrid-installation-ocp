@@ -1,0 +1,27 @@
+
+# 1 Reencrypt route
+
+oc create route reencrypt cache-service-https-route \
+  --port=https \
+  --service cache-service
+
+# 2 Call Endpoint
+
+POD_NAME=cache-service-0
+oc rsync $POD_NAME:/var/run/secrets/kubernetes.io/serviceaccount/..data/service-ca.crt .
+
+HOSTNAME_FOR_HTTPS_ROUTE=cache-service-https-route-demo-datagrid.apps.cluster-77dc.77dc.sandbox1398.opentlc.com
+
+curl -v -X PUT \
+  -u test:test.1 \
+  --cacert service-ca.crt \
+  -H 'Content-type: text/plain' \
+  -d 'world' \
+  https://$HOSTNAME_FOR_HTTPS_ROUTE/rest/default/hello
+
+
+# HotRod route
+
+oc create route passthrough cache-service-hotrod-route \
+  --port=hotrod \
+  --service cache-service
