@@ -2,7 +2,7 @@
 
 # ./templates-import.sh
 
-oc new-project demo-datagrid
+oc new-project demo-cache
 
 sleep 1
 
