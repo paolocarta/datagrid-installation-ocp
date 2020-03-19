@@ -1,2 +1,6 @@
 
 standalone-jar/cache-service/create-cache/target/
+
+standalone-jar/datagrid-service/create-cache/target/
+
+standalone-jar/datagrid-service/create-cache/dependency-reduced-pom.xml
