@@ -29,5 +29,38 @@ oc create route passthrough cache-service-hotrod-route \
 
 # 
 
-oc new-app https://github.com/paolocarta/datagrid-installation-ocp \
--
+oc project demo-cache
+
+cd standalone-jar/cache-service/create-cache
+
+oc new-build --binary --strategy=source --name=quickstart -l app=quickstart fabric8/s2i-java:2.3
+oc start-build quickstart --from-dir=target/ --follow
+
+export IMAGE=`oc get is quickstart -o jsonpath="{.status.dockerImageRepository}"`
+
+oc run quickstart \
+   --image=$IMAGE \
+   --replicas=1 \
+   --restart=OnFailure \
+   --env APP_NAME=cache-service \
+   --env CMD=create-cache \
+   --env JAVA_OPTIONS=-ea
+
+#
+
+oc project demo-datagrid
+
+cd standalone-jar/datagrid-service/create-cache
+
+oc new-build --binary --strategy=source --name=quickstart -l app=quickstart fabric8/s2i-java:2.3
+oc start-build quickstart --from-dir=target/ --follow
+
+export IMAGE=`oc get is quickstart -o jsonpath="{.status.dockerImageRepository}"`
+
+oc run quickstart \
+   --image=$IMAGE \
+   --replicas=1 \
+   --restart=OnFailure \
+   --env APP_NAME=datagrid-service \
+   --env CMD=create-cache \
+   --env JAVA_OPTIONS=-ea
